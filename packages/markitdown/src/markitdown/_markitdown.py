@@ -12,7 +12,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 from warnings import warn
 import requests
-import magika
+# import magika - jal: remove magika
 import charset_normalizer
 import codecs
 
@@ -110,7 +110,7 @@ class MarkItDown:
         else:
             self._requests_session = requests_session
 
-        self._magika = magika.Magika()
+        # self._magika = magika.Magika() - jal: remove magika
 
         # TODO - remove these (see enable_builtins)
         self._llm_client: Any = None
@@ -686,8 +686,10 @@ class MarkItDown:
         # Call magika to guess from the stream
         cur_pos = file_stream.tell()
         try:
-            result = self._magika.identify_stream(file_stream)
-            if result.status == "ok" and result.prediction.output.label != "unknown":
+            # result = self._magika.identify_stream(file_stream) - jal: remove magika
+            if False: # if result.status == "ok" and result.prediction.output.label != "unknown": - jal: remove magika
+                pass # - jal: remove magika
+                ''' # - jal: remove magika
                 # If it's text, also guess the charset
                 charset = None
                 if result.prediction.output.is_text:
@@ -751,6 +753,7 @@ class MarkItDown:
                             url=base_guess.url,
                         )
                     )
+                ''' # - jal: remove magika
             else:
                 # There were no other guesses, so just add the base guess
                 guesses.append(enhanced_guess)
